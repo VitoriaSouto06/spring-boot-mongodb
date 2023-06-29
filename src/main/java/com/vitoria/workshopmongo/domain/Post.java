@@ -1,11 +1,16 @@
 package com.vitoria.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.vitoria.workshopmongo.dto.AuthorDTO;
 
 @Document
 public class Post implements Serializable{
@@ -16,20 +21,27 @@ public class Post implements Serializable{
 	private Date date;
 	private String title;
 	private String body;
-	private User author;	
+	private AuthorDTO author;	
+	@DBRef(lazy=true)
+	List<Comment> comments = new ArrayList();
 	
 	public Post() {
 		super();
 	}
 
-	public Post(String id, Date date, String title, String body, User author) {
+	
+
+	public Post(String id, Date date, String title, String body, AuthorDTO author, List<Comment> comments) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.title = title;
 		this.body = body;
 		this.author = author;
+		this.comments = comments;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -64,12 +76,17 @@ public class Post implements Serializable{
 	}
 	
 
-	public User getAuthor() {
+	public AuthorDTO getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(AuthorDTO author) {
 		this.author = author;
+	}
+	
+
+	public List<Comment> getComments() {
+		return comments;
 	}
 
 	@Override
