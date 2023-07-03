@@ -65,11 +65,6 @@ public class UserResource {
 	
 
 	
-	@RequestMapping(value= "/{id}/posts",method=RequestMethod.GET)
-	public ResponseEntity<List<Post>> findPostById(@PathVariable String id) {
-		List<Post> posts = userService.findById(id).getPosts();
-		return ResponseEntity.ok().body(posts);
-	}
 	
 	
 }

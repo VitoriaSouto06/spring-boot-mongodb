@@ -1,5 +1,6 @@
 package com.vitoria.workshopmongo.resources;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vitoria.workshopmongo.domain.Post;
@@ -34,5 +36,12 @@ public class PostResource {
 		return ResponseEntity.ok().body(list);
 	}
 
+	@RequestMapping(value="/titlesearch", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> findByTitleContaining(@RequestParam(value="text", defaultValue="")String text){
+		text = URLDecoder.decode(text);
+		List<Post> post = postService.findByTitleContaining(text);
+		return ResponseEntity.ok().body(post);
+	}
+	
 	
 }
