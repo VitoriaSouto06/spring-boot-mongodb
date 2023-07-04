@@ -1,6 +1,7 @@
 package com.vitoria.workshopmongo.resources;
 
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.vitoria.workshopmongo.domain.Post;
 import com.vitoria.workshopmongo.domain.User;
 import com.vitoria.workshopmongo.dto.UserDTO;
+import com.vitoria.workshopmongo.resources.util.URL;
 import com.vitoria.workshopmongo.services.UserService;
 
 @RestController
@@ -63,7 +65,13 @@ public class UserResource {
 		return null;
 	}
 	
-
+	@RequestMapping(value="/namesearch",method=RequestMethod.GET)
+	public ResponseEntity<List<User>> findByName(@RequestParam(value="name",defaultValue="")String name){
+		name = URL.decodeParam(name);
+		List<User> list = userService.findByNameContaining(name);
+		return ResponseEntity.ok().body(list);
+		
+	}
 	
 	
 	
