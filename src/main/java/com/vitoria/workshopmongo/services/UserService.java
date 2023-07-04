@@ -50,9 +50,4 @@ public class UserService {
 		return new User(userdto.getId(),userdto.getName(),userdto.getEmail());
 	}
 	
-	public List<User> findByNameContaining(String name){
-		List<User> list = userRepository.findByName(name);
-		return list;
-	}
-	
 }
