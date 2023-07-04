@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.vitoria.workshopmongo.domain.Post;
 import com.vitoria.workshopmongo.domain.User;
 import com.vitoria.workshopmongo.dto.UserDTO;
+import com.vitoria.workshopmongo.resources.util.URL;
 import com.vitoria.workshopmongo.services.UserService;
 
 @RestController
@@ -62,6 +63,14 @@ public class UserResource {
 		userService.update(id, user);
 		return null;
 	}
+	
+	@RequestMapping(value="/searchnames", method=RequestMethod.GET)
+	public ResponseEntity<List<UserDTO>> findByName(@RequestParam(value="name", defaultValue="")String name){
+		name = URL.decodeParam(name);
+		List<UserDTO> list = userService.findByName(name);
+		return ResponseEntity.ok().body(list);
+	}
+		
 	
 
 	
